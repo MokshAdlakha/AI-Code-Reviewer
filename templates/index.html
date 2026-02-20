@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AI Code Reviewer</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<h2>AI Code Reviewer</h2>
+
+<textarea id="code" rows="15" cols="80"
+placeholder="Paste your code here"></textarea>
+
+<br><br>
+
+<button onclick="analyze()">Analyze</button>
+
+<pre id="output"></pre>
+
+<script>
+async function analyze() {
+
+let code =
+document.getElementById("code").value;
+
+let response = await fetch("/analyze", {
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({code})
+});
+
+let data = await response.json();
+document.getElementById("output").innerText =
+data.result;
+}
+</script>
+
+</body>
+</html>
